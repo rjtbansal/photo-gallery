@@ -8,10 +8,13 @@
                             <small>Subheading</small>
                         </h1>
                         <?php
-                            $select_query="SELECT * FROM users WHERE id=1";
-                            $result= $database->query($select_query);
-                            $user_found=mysqli_fetch_array($result);
-                            echo $user_found['username'];        
+                            //$user=new User(); //needed when we dont use static method
+                            $users=User::getAllUsers();
+                            while($row=mysqli_fetch_array($users)){
+                                echo $row['username'].'<br>';
+                            }
+                            $get_user_by_id=User::getUserById(1);
+                            echo $get_user_by_id['username'];
                         ?>
                         <ol class="breadcrumb">
                             <li>
