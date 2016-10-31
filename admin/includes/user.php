@@ -24,6 +24,29 @@ class User{
         $result=$database->query($query);
         return $result;
     }
+
+    public static function instantiate_object($get_user_by_id){
+        $obj=new self; //initializing an obj to this class itself
+        // $obj->id= $get_user_by_id['id'];
+        // $obj->username=$get_user_by_id['username'];
+        // $obj->firstname=$get_user_by_id['firstname'];
+        // $obj->lastname=$get_user_by_id['lastname'];
+
+        foreach ($get_user_by_id as $the_attribute => $value) {
+            if($obj->hasAttribute($the_attribute)){
+                $obj->the_attribute=$value;
+            }
+        }
+
+        return $obj;
+    }
+
+    private function hasAttribute($the_attribute){
+
+        $object_properties= get_object_vars($this); //getting properties of current class (User) so using $this
+
+        return array_key_exists($the_attribute, $object_properties); 
+    }
 }
 
 ?>

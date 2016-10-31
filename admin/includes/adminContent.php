@@ -15,11 +15,7 @@
                             }
 
                             $get_user_by_id=User::getUserById(1);
-                            $user = new User();
-                            $user->id=$get_user_by_id['id'];
-                            $user->username=$get_user_by_id['username'];
-                            $user->firstname=$get_user_by_id['firstname'];
-                            $user->lastname=$get_user_by_id['lastname'];
+                            $user=User::instantiate_object($get_user_by_id);
                             echo $user->firstname;
                         ?>
                         <ol class="breadcrumb">
