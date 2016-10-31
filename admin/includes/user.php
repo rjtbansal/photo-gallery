@@ -1,6 +1,13 @@
 <?php
 
 class User{
+
+    public $id;
+    public $username;
+    public $password;
+    public $firstname;
+    public $lastname;
+
     //making it static so that we dont have to instantiate it every time from outside
     public static function getAllUsers(){      
         return self::execute_query("SELECT * from users");

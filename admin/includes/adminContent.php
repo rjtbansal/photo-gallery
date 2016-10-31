@@ -13,8 +13,14 @@
                             while($row=mysqli_fetch_array($users)){
                                 echo $row['username'].'<br>';
                             }
+
                             $get_user_by_id=User::getUserById(1);
-                            echo $get_user_by_id['username'];
+                            $user = new User();
+                            $user->id=$get_user_by_id['id'];
+                            $user->username=$get_user_by_id['username'];
+                            $user->firstname=$get_user_by_id['firstname'];
+                            $user->lastname=$get_user_by_id['lastname'];
+                            echo $user->firstname;
                         ?>
                         <ol class="breadcrumb">
                             <li>
