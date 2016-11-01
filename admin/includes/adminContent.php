@@ -10,13 +10,16 @@
                         <?php
                             //$user=new User(); //needed when we dont use static method
                             $users=User::getAllUsers();
-                            while($row=mysqli_fetch_array($users)){
-                                echo $row['username'].'<br>';
+                            // while($row=mysqli_fetch_array($users)){
+                            //     echo $row['username'].'<br>';
+                            // }
+                            foreach ($users as $user) {
+                                echo $user->username."<br>";
                             }
 
                             $get_user_by_id=User::getUserById(1);
-                            $user=User::instantiate_object($get_user_by_id);
-                            echo $user->firstname;
+                            if($get_user_by_id)
+                                echo $user->firstname;
                         ?>
                         <ol class="breadcrumb">
                             <li>

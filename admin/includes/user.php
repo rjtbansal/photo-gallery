@@ -14,27 +14,30 @@ class User{
     }
 
     public static function getUserById($id){
-        $result=self::execute_query("SELECT * from users where id='{$id}' LIMIT 1");
-        $get_user=mysqli_fetch_array($result);
-        return $get_user;
+        $result_arr=self::execute_query("SELECT * from users where id='{$id}' LIMIT 1");
+        return !empty($result_arr) ? array_shift($result_arr) : false;     
     }
 
     public static function execute_query($query){
         global $database;
         $result=$database->query($query);
-        return $result;
+        $obj_array=Array(); //will store array of objects
+        while ($row=mysqli_fetch_array($result)) {
+            $obj_array[]=self::instantiate_object($row); //$result contains results as database table..we loop through each object
+        }
+        return $obj_array;
     }
 
-    public static function instantiate_object($get_user_by_id){
+    public static function instantiate_object($result_obj){
         $obj=new self; //initializing an obj to this class itself
         // $obj->id= $get_user_by_id['id'];
         // $obj->username=$get_user_by_id['username'];
         // $obj->firstname=$get_user_by_id['firstname'];
         // $obj->lastname=$get_user_by_id['lastname'];
 
-        foreach ($get_user_by_id as $the_attribute => $value) {
+        foreach ($result_obj as $the_attribute => $value) {
             if($obj->hasAttribute($the_attribute)){
-                $obj->the_attribute=$value;
+                $obj->$the_attribute=$value;
             }
         }
 
@@ -45,7 +48,7 @@ class User{
 
         $object_properties= get_object_vars($this); //getting properties of current class (User) so using $this
 
-        return array_key_exists($the_attribute, $object_properties); 
+        return array_key_exists($the_attribute, $object_properties);  
     }
 }
 
