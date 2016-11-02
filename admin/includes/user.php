@@ -30,11 +30,6 @@ class User{
 
     public static function instantiate_object($result_obj){
         $obj=new self; //initializing an obj to this class itself
-        // $obj->id= $get_user_by_id['id'];
-        // $obj->username=$get_user_by_id['username'];
-        // $obj->firstname=$get_user_by_id['firstname'];
-        // $obj->lastname=$get_user_by_id['lastname'];
-
         foreach ($result_obj as $the_attribute => $value) {
             if($obj->hasAttribute($the_attribute)){
                 $obj->$the_attribute=$value;
@@ -49,6 +44,20 @@ class User{
         $object_properties= get_object_vars($this); //getting properties of current class (User) so using $this
 
         return array_key_exists($the_attribute, $object_properties);  
+    }
+
+    public static function verifyUser($username, $password){
+        global $database;
+
+        $username=$database->escapeString($username);
+        $password=$database->escapeString($password);
+
+        $find_user_query="SELECT * FROM users WHERE ";
+        $find_user_query.="username='{$username}' AND password='{$password}' LIMIT 1";
+
+        $find_user_query_result=self::execute_query($find_user_query);
+        return !empty($find_user_query_result) ? array_shift($find_user_query_result) : false; 
+
     }
 }
 
