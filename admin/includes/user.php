@@ -2,7 +2,7 @@
 
 class User{
 
-    public $id;
+    public $id; //we use this in session class in login method 
     public $username;
     public $password;
     public $firstname;
