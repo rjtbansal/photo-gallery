@@ -2,7 +2,7 @@
     require_once("includes/header.php");
 
     if($session->isSignedIn()){
-        header('index.php');
+        header('Location: index.php');
     }
 
     if(isset($_POST['submit'])){
@@ -14,15 +14,16 @@
 
         if($user_found){
             $session->login($user_found);
-            header('index.php');
+            header('Location: index.php');
         }
         else{
             $msg="Your username and/or password is incorrect";
+            echo $msg;
         }
     }
     else{
-        $username='';
-        $password='';
+        $username="";
+        $password="";
     }
 
 ?>
@@ -35,7 +36,7 @@
         </div>
         <div class="form-group" >
             <label for="password">Password:</label>
-            <input type="text" id="password" class="form-control" name="password">
+            <input type="password" id="password" class="form-control" name="password">
         </div>
         <div class="form-group">
             <input type="submit" name="submit" value="Submit" class="btn btn-primary">
